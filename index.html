@@ -1,7 +1,414 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10283d"><meta name="description" content="استوديو تفاعلي لدرس TV Around the World، الصفحتان 54–55"><title>TV Studio | استوديو البرامج</title><link rel="stylesheet" href="style.css"><script defer src="lesson.js"></script><script defer src="app.js"></script></head><body>
-<a class="skip" href="#main">انتقل للمحتوى</a><header><a class="brand" href="#home"><span class="logo">TV<span>●</span></span><span>استوديو البرامج<small lang="en">AROUND THE WORLD</small></span></a><div class="top-tools"><button id="present">وضع العرض</button><button id="teacher">دليل المعلم</button></div></header>
-<nav aria-label="أقسام الحصة"><button data-tab="home">البداية</button><button data-tab="explore">البرامج الستة</button><button data-tab="words">الكلمات</button><button data-tab="listen">استمع واكتشف</button><button data-tab="match">تحدّي الاستوديو</button><button data-tab="check">Quick Check</button><button data-tab="create">برنامجنا</button><button data-tab="exit">بطاقة الخروج</button><button data-tab="book">الكتاب</button></nav>
-<main id="main" tabindex="-1"></main><footer><span>الثاني الثانوي · الوحدة ٤ · ص ٥٤–٥٥</span><span>معلومات البرامج بحسب نص الكتاب</span></footer>
-<dialog id="modal"><button class="close" aria-label="إغلاق">×</button><div id="modal-content"></div></dialog><div id="toast" role="status" aria-live="polite"></div>
-<template id="home-template"><section class="hero"><div><div class="eyebrow"><i></i> ON AIR / حان دورك</div><h1>العالم على الشاشة.<br><em>وبرنامجك التالي؟</em></h1><p>تعرّف إلى ستة برامج، اكتشف أدلتها، ثم ادخل الاستوديو بفكرتك الخاصة.</p><div class="actions"><button class="primary" data-go="explore">ابدأ رحلة البرامج ←</button><button data-go="book">افتح صفحتي الكتاب</button></div><div class="hero-stats"><span><b>06</b> برامج</span><span><b>04</b> فرق</span><span><b>45</b> دقيقة</span></div></div><div class="tv-wall"><div class="onair">LIVE <span>●</span></div><img src="assets/nature.png" alt="صورة الطبيعة في نص National Geographic Channel"><div class="tv-caption"><span>YOUR NEXT SHOW</span><strong>فكرة تستحق المشاهدة</strong></div><img class="mini-image" src="assets/quiz.png" alt="استوديو Jeopardy! في الكتاب"></div></section><section class="section"><div class="heading"><span class="eyebrow">TODAY’S MISSION</span><h2>ثلاث مهام داخل الاستوديو</h2></div><div class="goals"><article><b>01</b><h3>اكتشف البرنامج</h3><p>طابق ٤ من ٦ أوصاف بشكل صحيح.</p><small lang="en">Match 4 of 6 descriptions.</small></article><article><b>02</b><h3>افهم الكلمات</h3><p>أكمل ٦ من ٨ فراغات للمفردات.</p><small lang="en">Understand 6 of 8 key words.</small></article><article><b>03</b><h3>اصنع فكرتك</h3><p>عنوان، نوع، ووصف قصير لبرنامجك.</p><small lang="en">Write a title, type and description.</small></article></div></section><section class="prompt"><h2 lang="en">What do you like to watch?</h2><p>فكّر ١٠ ثوانٍ، ثم أعطِ مثالًا. لا تحتاج إلى معرفة هذه البرامج مسبقًا.</p><p lang="en">I like … because …</p><button data-go="words">نبدأ بالكلمات ←</button></section></template>
-</body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TV Around the World</title>
+<meta name="description" content="Interactive English lesson: TV Around the World, Unit 4, pages 54–55.">
+<style>
+:root{
+  --floor:#EEF2F8; --panel:#FFFFFF; --ink:#131B33; --ink2:#46506E; --line:#CBD3E4;
+  --tally:#E5383B; --ok:#0E7C6F; --okbg:#DDF3EF; --bad:#B42318; --badbg:#FDE7E4; --amber:#F2A93B; --blue:#2A4FA6; --bluebg:#E4EBFA;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--floor);color:var(--ink);font-family:"Avenir Next","Segoe UI",Tahoma,system-ui,-apple-system,sans-serif;font-size:18px;line-height:1.5}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:720px;margin:0 auto;padding:14px 16px 90px}
+/* top bar */
+.bar{display:flex;align-items:center;gap:10px;padding:6px 0 10px}
+.brand{font-weight:800;font-size:17px;letter-spacing:.2px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tally{display:inline-flex;align-items:center;gap:7px;font-weight:800;font-size:13px;border:2px solid var(--line);border-radius:999px;padding:3px 11px 3px 8px;color:var(--ink2);background:var(--panel);transition:all .25s}
+.tally i{width:12px;height:12px;border-radius:50%;background:#B9C1D6;display:block}
+.tally.on{border-color:var(--tally);color:var(--tally)}
+.tally.on i{background:var(--tally);box-shadow:0 0 0 4px rgba(229,56,59,.25),0 0 14px 2px rgba(229,56,59,.6)}
+.tool{border:2px solid var(--line);background:var(--panel);border-radius:10px;min-width:44px;height:40px;padding:0 10px;font-weight:700;font-size:15px}
+.tool[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.progress{display:flex;gap:5px;margin:2px 0 18px}
+.progress span{flex:1;height:8px;border-radius:5px;background:var(--line)}
+.progress span.done{background:var(--ok)}
+.progress span.now{background:var(--blue)}
+/* hero */
+h1{font-size:40px;line-height:1.05;margin:10px 0 6px;letter-spacing:-.5px}
+h2{font-size:26px;line-height:1.2;margin:0 0 8px}
+.sub{color:var(--ink2);margin:0 0 20px}
+.card{background:var(--panel);border:2px solid var(--line);border-radius:var(--r);padding:18px}
+.hint-line{color:var(--ink2);font-size:16px}
+/* channels */
+.channels{display:grid;gap:10px;margin:16px 0}
+.ch{display:flex;align-items:center;gap:14px;text-align:left;width:100%;background:var(--panel);border:2px solid var(--line);border-radius:var(--r);padding:12px 14px;transition:border-color .15s,transform .15s}
+.ch:hover{border-color:var(--ink)}
+.ch .dial{flex:none;width:48px;height:48px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-size:20px}
+.ch .meta{flex:1;min-width:0}
+.ch .name{font-weight:800}
+.ch .desc{font-size:15px;color:var(--ink2)}
+.ch .score{flex:none;font-weight:800;font-size:15px;color:var(--ok)}
+.ch.done .dial{background:var(--ok)}
+/* arabic help */
+.ar{display:none;direction:rtl;text-align:right;color:var(--blue);font-size:.92em;margin-top:3px;font-family:Tahoma,"Segoe UI",system-ui,sans-serif}
+body.ar-on .ar{display:block}
+.tag{display:inline-block;font-size:13px;font-weight:800;background:var(--bluebg);color:var(--blue);border-radius:6px;padding:1px 8px;margin-bottom:8px}
+.tag.extra{background:#FFF1D6;color:#8A5A00}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:12px;border:2px solid var(--ink);background:var(--ink);color:#fff;font-weight:800}
+.btn.ghost{background:var(--panel);color:var(--ink)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+/* options */
+.opts{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+@media(min-width:560px){.opts.two{grid-template-columns:1fr 1fr}}
+.opt{text-align:left;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:700;min-height:52px}
+.opt:hover:not([disabled]){border-color:var(--ink)}
+.opt.ok{background:var(--okbg);border-color:var(--ok);color:#073F38}
+.opt.bad{background:var(--badbg);border-color:var(--bad);color:#6B1209;animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.feedback{margin-top:14px;padding:12px 14px;border-radius:12px;font-weight:600;min-height:20px}
+.feedback.ok{background:var(--okbg);color:#073F38}
+.feedback.bad{background:var(--badbg);color:#6B1209}
+.feedback .ar{color:inherit}
+.q{font-size:22px;font-weight:800;line-height:1.3;margin:4px 0}
+.say{border-left:5px solid var(--amber);padding:6px 14px;margin:14px 0;font-size:19px;background:#FFF8E8;border-radius:0 10px 10px 0}
+.say div+div{margin-top:4px}
+/* fill */
+.sentence{font-size:21px;line-height:2.1;margin:6px 0}
+.slot{display:inline-block;min-width:130px;height:40px;line-height:36px;padding:0 10px;margin:0 3px;border:2px dashed var(--ink2);border-radius:9px;text-align:center;font-weight:800;vertical-align:middle;background:#FAFBFE}
+.slot.filled{border-style:solid;border-color:var(--blue);background:var(--bluebg);color:var(--blue)}
+.slot.ok{border-color:var(--ok);background:var(--okbg);color:var(--ok)}
+.slot.bad{border-color:var(--bad);background:var(--badbg);color:var(--bad)}
+.bank{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{border:2px solid var(--ink);background:var(--panel);border-radius:10px;padding:6px 12px;font-weight:800;text-align:center;min-width:90px}
+.chip small{display:none;font-weight:600;color:var(--blue);font-family:Tahoma,"Segoe UI",sans-serif;font-size:13px}
+body.ar-on .chip small{display:block}
+.chip[disabled]{opacity:.35}
+/* programs */
+.progs{display:grid;gap:10px;margin-top:12px}
+.prog{border:2px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}
+.prog>button{width:100%;text-align:left;background:none;border:0;padding:12px 14px;display:flex;gap:12px;align-items:center}
+.prog .pn{font-weight:800;font-size:19px}
+.prog .when{font-size:14px;color:var(--ink2)}
+.prog .kind{margin-left:auto;font-size:13px;font-weight:800;background:var(--bluebg);color:var(--blue);border-radius:6px;padding:2px 8px;flex:none}
+.prog .body{display:none;padding:0 14px 14px;font-size:17px}
+.prog.open .body{display:block}
+.prog.open{border-color:var(--ink)}
+.clue{display:inline-block;background:#FFF1D6;border-radius:6px;padding:0 6px;font-weight:700}
+/* listen */
+.listen{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.textbox{margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--bluebg);font-size:18px}
+/* build */
+label{display:block;font-weight:800;margin:14px 0 6px}
+input[type=text]{width:100%;font:inherit;padding:11px 12px;border:2px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.kinds{display:flex;flex-wrap:wrap;gap:8px}
+.kinds .chip{min-width:0}
+.kinds .chip[aria-pressed="true"]{background:var(--ink);color:#fff}
+.output{margin-top:16px;padding:16px;border-radius:12px;background:var(--ink);color:#fff;font-size:20px;line-height:1.7}
+.output b{color:var(--amber)}
+.report{display:grid;gap:10px;margin:14px 0}
+.rrow{display:flex;justify-content:space-between;gap:10px;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:700}
+.big{font-size:56px;font-weight:800;line-height:1}
+footer{margin-top:30px;color:var(--ink2);font-size:14px;text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <div class="brand" id="brand">TV Studio</div>
+    <span class="tally" id="tally" aria-live="polite"><i></i><span>ON AIR</span></span>
+    <button class="tool" id="arBtn" aria-pressed="false" title="Arabic help">عربي</button>
+    <button class="tool" id="sndBtn" aria-pressed="true" title="Sound">Sound</button>
+  </div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <main id="app"></main>
+  <footer>Unit 4 · TV Around the World · pages 54–55<br>المعلم: نواف البدراني</footer>
+</div>
+
+<script>
+"use strict";
+/* ---------- data (from the textbook pages 54–55) ---------- */
+const P = {
+  jeo: {name:"Jeopardy!", when:"Tuesday, 9:30 P.M.", kind:"quiz show", kindAr:"برنامج مسابقات",
+    clue:"American quiz show · contestants answer in question form · first episode March 30, 1964"},
+  hoy: {name:"Hoy", when:"Monday, 9:00 A.M.", kind:"morning show", kindAr:"برنامج صباحي",
+    clue:"morning show · recorded live in front of an audience · guest chef cooks Peruvian shrimp · a prosperous businessman gives advice"},
+  nat: {name:"National Geographic Channel", when:"Thursday, 8:00 P.M.", kind:"documentaries", kindAr:"قناة وثائقية",
+    clue:"documentaries about science, animals, nature and culture · available in 25 languages, in over 143 countries"},
+  csi: {name:"CSI: Crime Scene Investigation", short:"CSI", when:"Thursday, 9:00 P.M.", kind:"crime drama", kindAr:"مسلسل جريمة",
+    clue:"American crime drama · forensic scientists investigate mysterious and unusual deaths · a puzzling case"},
+  top: {name:"Top Gear", when:"Wednesday, 9:30 P.M.", kind:"cars", kindAr:"برنامج عن السيارات",
+    clue:"award-winning British series about cars · new version since 2002 · acclaim as well as criticism"},
+  sas: {name:"Sasuke", when:"Wednesday, 8:00 P.M.", kind:"sports", kindAr:"برنامج رياضي ياباني",
+    clue:"popular Japanese sports program · airs twice a year · 100 fighters and athletes · obstacle courses · Ninja Warrior"}
+};
+const label = k => P[k].short || P[k].name;
+
+const VOCAB_AR = {air:"يبثّ / يُذاع",broadcast:"يُذيع / يبثّ",contestants:"متسابقون",inspiring:"ملهِم / محفّز",plot:"يخطّط سرًّا",prosperous:"مزدهر / ثريّ وناجح",puzzling:"محيّر / يصعب فهمه",version:"نسخة / صيغة مختلفة"};
+const BANK = ["air","broadcast","contestants","inspiring","plot","prosperous","puzzling","version"];
+
+const TALK = [
+  {q:"What kind of television programs do you like to watch? Give some examples.", ar:"ما نوع البرامج التلفزيونية التي تحب مشاهدتها؟ أعطِ أمثلة.", frame:["I like ______ programs.","For example, ______."]},
+  {q:"What kind of programs do you dislike? Why?", ar:"ما نوع البرامج التي لا تحبها؟ ولماذا؟", frame:["I don’t like ______ programs.","I don’t like them because ______."]},
+  {q:"Which programs listed here would you watch? Which wouldn’t you watch? Explain.", ar:"أي البرامج المذكورة ستشاهدها؟ وأيها لن تشاهدها؟ اشرح.", frame:["I would watch ______ because it is ______.","I wouldn’t watch ______ because ______."]}
+];
+
+/* Listen & Match: short descriptions based on the book text (simplified) */
+const MATCH = [
+  {text:"This is a morning show. A guest chef cooks Peruvian shrimp.", a:"hoy", why:"“Morning show” and “guest chef” point to Hoy."},
+  {text:"Forensic scientists look into a puzzling death in a park.", a:"csi", why:"Forensic scientists and a puzzling case: CSI."},
+  {text:"One hundred fighters and athletes try difficult obstacle courses.", a:"sas", why:"100 fighters and athletes, obstacle courses: Sasuke."},
+  {text:"This British show is about cars.", a:"top", why:"British and cars: Top Gear."},
+  {text:"Contestants must give their answers in question form.", a:"jeo", why:"Answer-and-question format: Jeopardy!"},
+  {text:"This channel has documentaries about animals, nature and science.", a:"nat", why:"Documentaries about science and nature: National Geographic Channel."}
+];
+
+const QCB = [
+  {q:"Which show has attracted both positive and negative comments from reviewers?", a:"top", why:"The text says Top Gear received acclaim and also criticism."},
+  {q:"Which show is broadcast in the morning?", a:"hoy", why:"Hoy is a morning show (Monday, 9:00 A.M.)."},
+  {q:"Which show airs twice a year?", a:"sas", why:"The text says Sasuke airs twice a year."},
+  {q:"Which shows are available in more than 20 languages?", a:"nat", why:"Only National Geographic Channel mentions languages: 25 languages, over 143 countries."},
+  {q:"Which show has aired for more than forty years?", a:"jeo", why:"Jeopardy! first aired on March 30, 1964."},
+  {q:"Which show might be enjoyed by a person who likes murder mysteries?", a:"csi", why:"CSI: forensic scientists investigate mysterious deaths."}
+];
+
+const QCA = [
+  {parts:["Two words that mean “to transmit to an audience by radio or television station” are to ",0," and to ",1,"."], ans:[["air","broadcast"],["air","broadcast"]], distinct:true, hint:"Think: a TV station sends a program to viewers."},
+  {parts:["To plan something secretly is to ",0,"."], ans:[["plot"]], hint:"In CSI, someone is “plotting” crimes."},
+  {parts:["Someone who has had financial success is ",0,"."], ans:[["prosperous"]], hint:"The businessman on Hoy is described this way."},
+  {parts:["Something that causes a feeling of excitement and strong desire to do something important is ",0,"."], ans:[["inspiring"]], hint:"National Geographic content is described this way."},
+  {parts:["People who take part in a contest are called ",0,"."], ans:[["contestants"]], hint:"Jeopardy! has them."},
+  {parts:["Something that is difficult to understand or solve is ",0,"."], ans:[["puzzling"]], hint:"The CSI case is like this."},
+  {parts:["A variation of an earlier or original thing is a ",0,"."], ans:[["version"]], hint:"Top Gear has a new one since 2002."}
+];
+
+const CHANNELS = [
+  {id:"talk", n:1, name:"Listen and Discuss", desc:"Talk about TV programs", ar:"تحدّث عن البرامج التلفزيونية", scored:false},
+  {id:"progs", n:2, name:"Meet the programs", desc:"Six programs from the book", ar:"تعرّف على البرامج الستة", scored:false},
+  {id:"match", n:3, name:"Listen and Match", desc:"Match the program with its description", ar:"طابق البرنامج بوصفه", scored:true, total:MATCH.length},
+  {id:"qca", n:4, name:"Quick Check A", desc:"Vocabulary: complete the sentences", ar:"المفردات: أكمل الجمل", scored:true, total:QCA.length},
+  {id:"qcb", n:5, name:"Quick Check B", desc:"Comprehension: name the show", ar:"الفهم: سمِّ البرنامج", scored:true, total:QCB.length},
+  {id:"pair", n:6, name:"Pair Work", desc:"Create your own TV program", ar:"ابتكر برنامجك التلفزيوني", scored:false}
+];
+
+/* ---------- state ---------- */
+const S = {view:"home", ch:null, i:0, firstTry:true, scores:{}, done:{}, ar:false, snd:true, used:[]};
+const app = document.getElementById("app");
+function load(){try{const d=JSON.parse(localStorage.getItem("tvlesson_u4")||"{}");S.scores=d.scores||{};S.done=d.done||{};S.ar=!!d.ar;S.snd=d.snd!==false;}catch(e){}}
+function save(){try{localStorage.setItem("tvlesson_u4",JSON.stringify({scores:S.scores,done:S.done,ar:S.ar,snd:S.snd}));}catch(e){}}
+load();
+
+/* ---------- helpers ---------- */
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ar = s => `<div class="ar" lang="ar" dir="rtl">${esc(s)}</div>`;
+const shuffle = a => {a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+let actx=null;
+function tone(f,d,t="sine",delay=0){ if(!S.snd) return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); const o=actx.createOscillator(),g=actx.createGain(); o.type=t;o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(actx.destination);const t0=actx.currentTime+delay;o.start(t0);g.gain.setValueAtTime(.08,t0);g.gain.exponentialRampToValueAtTime(.0001,t0+d);o.stop(t0+d+.02);}catch(e){} }
+const sOk=()=>{tone(660,.14);tone(880,.2,"sine",.12)}, sBad=()=>tone(200,.25,"square"), sTap=()=>tone(440,.05);
+function tallyOn(){const t=document.getElementById("tally");t.classList.add("on");clearTimeout(tallyOn.t);tallyOn.t=setTimeout(()=>t.classList.remove("on"),1600);}
+const canSpeak = "speechSynthesis" in window;
+function speak(text){ if(!canSpeak) return; try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u);}catch(e){} }
+
+function setProgress(total,now){
+  const el=document.getElementById("progress");
+  el.innerHTML=Array.from({length:total},(_,k)=>`<span class="${k<now?"done":k===now?"now":""}"></span>`).join("");
+}
+function stepsFor(id){ return {talk:TALK.length,progs:1,match:MATCH.length,qca:QCA.length,qcb:QCB.length,pair:1}[id]; }
+
+/* ---------- views ---------- */
+function home(){
+  S.view="home"; S.ch=null; setProgress(0,0);
+  document.getElementById("brand").textContent="TV Studio";
+  const total = Object.values(S.scores).reduce((a,b)=>a+b,0);
+  app.innerHTML=`
+    <h1>TV Around the World</h1>
+    <p class="sub">Pick a channel. Six programs, one lesson.${S.ar?"":""}</p>
+    ${ar("اختر قناة. ستة برامج ودرس واحد. اضغط «عربي» لإظهار المساعدة بالعربية.")}
+    <div class="channels">
+      ${CHANNELS.map(c=>`
+        <button class="ch ${S.done[c.id]?"done":""}" data-ch="${c.id}">
+          <span class="dial">${c.n}</span>
+          <span class="meta"><span class="name">${esc(c.name)}</span><br><span class="desc">${esc(c.desc)}</span>${ar(c.ar)}</span>
+          <span class="score">${c.scored&&S.scores[c.id]!=null?S.scores[c.id]+"/"+c.total:S.done[c.id]?"✓":""}</span>
+        </button>`).join("")}
+    </div>
+    <div class="actions"><button class="btn ghost" id="repBtn">See my studio report</button></div>`;
+  app.querySelectorAll("[data-ch]").forEach(b=>b.onclick=()=>{sTap();startChannel(b.dataset.ch);});
+  document.getElementById("repBtn").onclick=report;
+}
+function startChannel(id){ S.ch=id;S.i=0;S.used=[];S.view="ch";S.runScore=0;S.firstTry=true;render(); }
+function render(){
+  const c=CHANNELS.find(x=>x.id===S.ch);
+  document.getElementById("brand").textContent=`Channel ${c.n}`;
+  const n=stepsFor(c.id); setProgress(n,S.i);
+  ({talk:rTalk,progs:rProgs,match:rMatch,qca:rQca,qcb:rQcb,pair:rPair})[c.id]();
+  window.scrollTo({top:0});
+}
+function next(){
+  const c=CHANNELS.find(x=>x.id===S.ch);
+  if(S.i+1<stepsFor(c.id)){S.i++;S.firstTry=true;render();}
+  else finishChannel(c);
+}
+function finishChannel(c){
+  S.done[c.id]=true;
+  if(c.scored){S.scores[c.id]=Math.max(S.scores[c.id]||0,S.runScore);}
+  save(); setProgress(1,1);
+  const nextC=CHANNELS[CHANNELS.indexOf(c)+1];
+  app.innerHTML=`
+    <h2>Channel ${c.n} complete</h2>
+    ${c.scored?`<p class="big">${S.runScore}<span class="hint-line"> / ${c.total}</span></p><p class="sub">correct on the first try</p>${ar("إجابات صحيحة من المحاولة الأولى")}`:`<p class="sub">Well done.</p>`}
+    <div class="actions">
+      ${nextC?`<button class="btn" id="nx">Go to channel ${nextC.n}</button>`:`<button class="btn" id="nx">See my studio report</button>`}
+      <button class="btn ghost" id="hm">All channels</button>
+      ${c.scored?`<button class="btn ghost" id="again">Try again</button>`:""}
+    </div>`;
+  document.getElementById("nx").onclick=()=>nextC?startChannel(nextC.id):report();
+  document.getElementById("hm").onclick=home;
+  const ag=document.getElementById("again"); if(ag) ag.onclick=()=>startChannel(c.id);
+  if(c.scored){tallyOn();sOk();}
+}
+function stepHead(tag,extra){ return `<span class="tag ${extra?"extra":""}">${esc(tag)}</span>`; }
+function navRow(canNext,label="Next"){ return `<div class="actions"><button class="btn ghost" id="backHome">Channels</button><button class="btn" id="nextBtn" ${canNext?"":"disabled"}>${label}</button></div>`; }
+function wireNav(){ const b=document.getElementById("backHome"); if(b) b.onclick=home; const n=document.getElementById("nextBtn"); if(n) n.onclick=()=>{sTap();next();}; }
+
+/* Talk */
+function rTalk(){
+  const t=TALK[S.i];
+  app.innerHTML=`${stepHead("Talk with your partner")}
+    <p class="q">${esc(t.q)}</p>${ar(t.ar)}
+    <div class="say">${t.frame.map(f=>`<div>${esc(f)}</div>`).join("")}</div>
+    <p class="hint-line">Think for 20 seconds. Then tell your partner.</p>${ar("فكّر ٢٠ ثانية ثم أخبر زميلك.")}
+    ${navRow(true,S.i<TALK.length-1?"Next question":"Finish")}`;
+  wireNav();
+}
+/* Programs */
+function rProgs(){
+  app.innerHTML=`${stepHead("From the book")}
+    <h2>Meet the programs</h2><p class="sub">Tap a program to see the clue words.</p>${ar("اضغط على البرنامج لترى الكلمات الدالة عليه.")}
+    <div class="progs">${Object.keys(P).map(k=>`
+      <div class="prog" data-k="${k}">
+        <button aria-expanded="false"><span><span class="pn">${esc(P[k].name)}</span><br><span class="when">${esc(P[k].when)}</span></span><span class="kind">${esc(P[k].kind)}</span></button>
+        <div class="body">${P[k].clue.split(" · ").map(c=>`<span class="clue">${esc(c)}</span> `).join("")}${ar(P[k].kindAr)}
+          ${canSpeak?`<div class="listen"><button class="btn ghost say-btn" data-k="${k}">Listen</button></div>`:""}</div>
+      </div>`).join("")}</div>
+    ${navRow(true,"Finish")}`;
+  app.querySelectorAll(".prog>button").forEach(b=>b.onclick=()=>{const p=b.parentElement;const o=p.classList.toggle("open");b.setAttribute("aria-expanded",o);sTap();});
+  app.querySelectorAll(".say-btn").forEach(b=>b.onclick=()=>speak(P[b.dataset.k].name+". "+P[b.dataset.k].clue.replace(/ · /g,". ")));
+  wireNav();
+}
+/* multiple choice (match + qcb) */
+function mcScreen(item,tag,extraTag,listen){
+  const opts=shuffle([item.a,...shuffle(Object.keys(P).filter(k=>k!==item.a)).slice(0,3)]);
+  const showText=!listen||!canSpeak;
+  app.innerHTML=`${stepHead(tag)}${extraTag?`<span class="tag extra">${extraTag}</span>`:""}
+    ${listen?`<div class="listen"><button class="btn" id="play">▶ Listen</button><button class="btn ghost" id="showTxt" ${showText?"hidden":""}>Show text</button></div>${ar("استمع ثم اختر البرنامج. اضغط «Show text» إذا احتجت إلى النص.")}
+      <div class="textbox" id="txt" ${showText?"":"hidden"}>${esc(item.text)}</div>
+      <p class="q">Which program is it?</p>`
+    :`<p class="q">${esc(item.q)}</p>${item.ar?ar(item.ar):""}`}
+    <div class="opts two" role="group">${opts.map(k=>`<button class="opt" data-k="${k}">${esc(label(k))}</button>`).join("")}</div>
+    <div class="feedback" id="fb" role="status" hidden></div>
+    <div id="navArea">${navRow(false)}</div>`;
+  if(listen){
+    const play=document.getElementById("play"); play.onclick=()=>speak(item.text); if(canSpeak) setTimeout(()=>speak(item.text),350);
+    document.getElementById("showTxt").onclick=e=>{document.getElementById("txt").hidden=false;e.target.hidden=true;};
+  }
+  const fb=document.getElementById("fb");
+  app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    if(b.dataset.k===item.a){
+      sOk();tallyOn(); b.classList.add("ok");
+      app.querySelectorAll(".opt").forEach(o=>o.disabled=true);
+      if(S.firstTry) S.runScore++;
+      fb.hidden=false;fb.className="feedback ok";fb.innerHTML=`${S.firstTry?"Correct!":"Yes, that’s it."} ${esc(item.why)}`;
+      document.getElementById("txt")&&(document.getElementById("txt").hidden=false);
+      document.getElementById("navArea").innerHTML=navRow(true,S.i+1<stepsFor(S.ch)?"Next":"Finish"); wireNav();
+    }else{
+      sBad(); S.firstTry=false; b.classList.add("bad"); b.disabled=true;
+      fb.hidden=false;fb.className="feedback bad";fb.innerHTML=`Not this one. Look for the clue words and try again.${ar("ليست هذه الإجابة. ابحث عن الكلمات الدالة وحاول مرة أخرى.")}`;
+    }
+  });
+  wireNav();
+}
+function rMatch(){ mcScreen(MATCH[S.i],"Listen and match","Extra: computer voice reads a short version",true); }
+function rQcb(){ mcScreen({...QCB[S.i]},"Quick Check B: name the show",null,false); }
+/* Quick Check A */
+function rQca(){
+  const it=QCA[S.i]; const slots=it.ans.map(()=>null);
+  const html=it.parts.map(p=>typeof p==="number"?`<span class="slot" data-s="${p}" role="button" tabindex="0" aria-label="blank ${p+1}"></span>`:esc(p)).join("");
+  app.innerHTML=`${stepHead("Quick Check A: complete the sentence")}
+    <p class="sentence">${html}</p>
+    <div class="bank">${BANK.map(w=>`<button class="chip" data-w="${w}" ${S.used.includes(w)?"disabled":""}>${w}<small lang="ar" dir="rtl">${esc(VOCAB_AR[w])}</small></button>`).join("")}</div>
+    ${ar("اضغط على كلمة لوضعها في الفراغ، واضغط على الفراغ لإزالتها.")}
+    <div class="feedback" id="fb" role="status" hidden></div>
+    <div class="actions"><button class="btn ghost" id="backHome">Channels</button><button class="btn ghost" id="clr">Clear</button><button class="btn" id="chk" disabled>Check</button><button class="btn" id="nextBtn" hidden>${S.i+1<QCA.length?"Next":"Finish"}</button></div>`;
+  const slotEls=[...app.querySelectorAll(".slot")], chips=[...app.querySelectorAll(".chip")], chk=document.getElementById("chk"), fb=document.getElementById("fb");
+  function paint(){
+    slotEls.forEach((el,k)=>{el.textContent=slots[k]||"";el.classList.toggle("filled",!!slots[k]);el.classList.remove("ok","bad");});
+    chips.forEach(c=>{ if(!S.used.includes(c.dataset.w)) c.disabled=slots.includes(c.dataset.w); });
+    chk.disabled=slots.some(x=>!x);
+  }
+  chips.forEach(c=>c.onclick=()=>{const e=slots.indexOf(null); if(e<0) return; slots[e]=c.dataset.w; sTap(); paint();});
+  const clearSlot=k=>{slots[k]=null;paint();};
+  slotEls.forEach((el,k)=>{el.onclick=()=>clearSlot(k);el.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();clearSlot(k);}};});
+  document.getElementById("clr").onclick=()=>{slots.fill(null);fb.hidden=true;paint();};
+  chk.onclick=()=>{
+    let good=slots.every((w,k)=>it.ans[k].includes(w)); if(good&&it.distinct) good=new Set(slots).size===slots.length;
+    if(good){
+      sOk();tallyOn(); slotEls.forEach(el=>el.classList.add("ok"));
+      if(S.firstTry) S.runScore++;
+      slots.forEach(w=>S.used.push(w));
+      chips.forEach(c=>c.disabled=true); chk.hidden=true; document.getElementById("clr").hidden=true; slotEls.forEach(el=>{el.onclick=null;});
+      fb.hidden=false;fb.className="feedback ok";fb.textContent=S.firstTry?"Correct!":"Yes, that’s it.";
+      const nb=document.getElementById("nextBtn"); nb.hidden=false; nb.onclick=()=>{sTap();next();}; nb.focus();
+    }else{
+      sBad(); S.firstTry=false; slotEls.forEach(el=>el.classList.add("bad"));
+      fb.hidden=false;fb.className="feedback bad";fb.innerHTML=`Not yet. ${esc(it.hint)}${ar("ليس بعد. فكّر في معنى الجملة وحاول مرة أخرى.")}`;
+      setTimeout(()=>slotEls.forEach(el=>el.classList.remove("bad")),700);
+    }
+  };
+  document.getElementById("backHome").onclick=home;
+}
+/* Pair work */
+function rPair(){
+  const kinds=["quiz","cooking","sports","cartoon","news","documentary","crime"];
+  let kind="", title="", about="";
+  app.innerHTML=`${stepHead("Pair Work")}
+    <p class="q">Create your own idea for a TV program. Decide on the kind of program and the title. Then write a brief description of the program.</p>
+    ${ar("ابتكر فكرتك الخاصة لبرنامج تلفزيوني. حدّد نوع البرنامج والعنوان، ثم اكتب وصفًا مختصرًا له.")}
+    <label>1. Kind of program</label><div class="kinds">${kinds.map(k=>`<button class="chip" aria-pressed="false" data-k="${k}">${k}</button>`).join("")}</div>
+    <label for="ttl">2. Title</label><input type="text" id="ttl" maxlength="40" placeholder="Desert Chef" autocomplete="off">
+    <label for="abt">3. What is it about?</label><input type="text" id="abt" maxlength="90" placeholder="making famous dishes with a guest chef" autocomplete="off">
+    <div class="output" id="out" aria-live="polite"></div>
+    <div class="actions"><button class="btn ghost" id="backHome">Channels</button><button class="btn ghost" id="cp">Copy</button>${canSpeak?`<button class="btn ghost" id="rd">Listen</button>`:""}<button class="btn" id="nextBtn">Finish</button></div>`;
+  const out=document.getElementById("out");
+  const text=()=>`Our program is called ${title||"______"}.\nIt is a ${kind||"______"} program.\nIt is about ${about||"______"}.`;
+  function upd(){ out.innerHTML=`Our program is called <b>${esc(title||"______")}</b>.<br>It is a <b>${esc(kind||"______")}</b> program.<br>It is about <b>${esc(about||"______")}</b>.`; }
+  app.querySelectorAll(".kinds .chip").forEach(b=>b.onclick=()=>{kind=b.dataset.k;app.querySelectorAll(".kinds .chip").forEach(x=>x.setAttribute("aria-pressed",x===b));sTap();upd();});
+  document.getElementById("ttl").oninput=e=>{title=e.target.value.trim();upd();};
+  document.getElementById("abt").oninput=e=>{about=e.target.value.trim().replace(/\.$/,"");upd();};
+  document.getElementById("cp").onclick=async e=>{try{await navigator.clipboard.writeText(text());e.target.textContent="Copied";}catch(_){e.target.textContent="Select and copy";}setTimeout(()=>e.target.textContent="Copy",1500);};
+  const rd=document.getElementById("rd"); if(rd) rd.onclick=()=>speak(text().replace(/\n/g," "));
+  document.getElementById("backHome").onclick=home;
+  document.getElementById("nextBtn").onclick=()=>{sTap();next();};
+  upd();
+}
+/* Report */
+function report(){
+  S.view="report"; setProgress(1,1);
+  document.getElementById("brand").textContent="Studio report";
+  const sc=CHANNELS.filter(c=>c.scored); const got=sc.reduce((a,c)=>a+(S.scores[c.id]||0),0), tot=sc.reduce((a,c)=>a+c.total,0);
+  app.innerHTML=`<h2>Studio report</h2>
+    <p class="big">${got}<span class="hint-line"> / ${tot}</span></p><p class="sub">correct on the first try</p>${ar("إجابات صحيحة من المحاولة الأولى")}
+    <div class="report">${CHANNELS.map(c=>`<div class="rrow"><span>${c.n}. ${esc(c.name)}</span><span>${c.scored?(S.scores[c.id]!=null?S.scores[c.id]+"/"+c.total:"–"):(S.done[c.id]?"✓":"–")}</span></div>`).join("")}</div>
+    <div class="actions"><button class="btn" id="hm">All channels</button><button class="btn ghost" id="rs">Start again</button></div>`;
+  document.getElementById("hm").onclick=home;
+  document.getElementById("rs").onclick=()=>{S.scores={};S.done={};save();home();};
+}
+
+/* ---------- toolbar ---------- */
+const arBtn=document.getElementById("arBtn"), sndBtn=document.getElementById("sndBtn");
+function applyTools(){ document.body.classList.toggle("ar-on",S.ar); arBtn.setAttribute("aria-pressed",S.ar); sndBtn.setAttribute("aria-pressed",S.snd); sndBtn.textContent=S.snd?"Sound on":"Sound off"; }
+arBtn.onclick=()=>{S.ar=!S.ar;save();applyTools();};
+sndBtn.onclick=()=>{S.snd=!S.snd;save();applyTools();if(S.snd)sOk();};
+applyTools(); home();
+</script>
+</body>
+</html>
